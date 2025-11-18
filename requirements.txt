@@ -1,0 +1,10 @@
+pyspark==3.5.1
+pandas==2.2.2
+pyarrow>=15
+spacy==3.7.2
+spacy-langdetect==0.1.2
+networkx==3.3
+transformers==4.44.2
+torch==2.1.2
+sentencepiece
+rouge-score==0.1.2
