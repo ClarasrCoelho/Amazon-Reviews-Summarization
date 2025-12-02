@@ -1,10 +1,11 @@
-base_path: "data"
+base_path: "s3a://labgdd-tp2/labgdd"
 
 paths:
-  raw: "raw/Books_sample.json"            # <-- só o nome da pasta
+  raw: "raw/Books_sample.json"
   bronze: "bronze/reviews"
   silver: "silver/reviews"
   gold: "gold"
+
 
 min_doc_length: 50
 languages: ["en", "pt"]
