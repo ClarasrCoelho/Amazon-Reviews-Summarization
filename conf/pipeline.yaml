@@ -7,7 +7,7 @@ paths:
   gold: "gold"
 
 
-min_doc_length: 50
+min_doc_length: 0
 languages: ["en", "pt"]
 
 lda:

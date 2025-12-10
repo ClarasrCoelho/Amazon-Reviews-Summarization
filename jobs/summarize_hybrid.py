@@ -1,29 +1,47 @@
 import os
+import sys
 import pandas as pd
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
+from pyspark.sql import SparkSession, functions as F
 from pyspark.sql.functions import pandas_udf
 from pyspark.sql.types import StringType
+
+from libs.io_utils import load_config
 from libs.summarize import summarize_hybrid
 
-BASE_PATH = os.getenv("LABGDD_BASE_PATH", "data")
+os.environ["PYSPARK_PYTHON"] = sys.executable
+os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
+
+cfg = load_config("conf/pipeline.yaml")
+BASE_PATH = cfg["base_path"].rstrip("/")
+
+silver_path = f"{BASE_PATH}/{cfg['paths']['silver']}"
+gold_root = cfg["paths"].get("gold", "gold")
+summaries_path = f"{BASE_PATH}/{gold_root}/summaries"
 
 spark = (
     SparkSession.builder
     .appName("labgdd-summarize-hybrid")
+    .master("local[*]")
+    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.4")
+    .config(
+        "spark.hadoop.fs.s3a.aws.credentials.provider",
+        "com.amazonaws.auth.profile.ProfileCredentialsProvider",
+    )
+    .config("spark.hadoop.fs.s3a.endpoint", "s3.eu-north-1.amazonaws.com")
     .getOrCreate()
 )
 
-silver_path = os.path.join(BASE_PATH, "silver", "reviews")
-summaries_path = os.path.join(BASE_PATH, "gold", "summaries")
-
+print("🔵 A ler Silver de:", silver_path)
 df = spark.read.parquet(silver_path)
 
 @pandas_udf(StringType())
 def summary_udf(col: pd.Series) -> pd.Series:
     return col.fillna("").apply(
-        lambda t: summarize_hybrid(t, num_sentences_textrank=5,
-                                   max_new_tokens=128)
+        lambda t: summarize_hybrid(
+            t,
+            num_sentences_textrank=5,
+            max_new_tokens=128,
+        )
     )
 
 summarized = df.groupBy("asin").agg(
@@ -37,6 +55,8 @@ summarized = df.groupBy("asin").agg(
     "summary"
 )
 
+print("🔵 A gravar Summaries em:", summaries_path)
 summarized.write.mode("overwrite").parquet(summaries_path)
 
 spark.stop()
+print("✅ Gold/Summaries no S3 concluído.")
