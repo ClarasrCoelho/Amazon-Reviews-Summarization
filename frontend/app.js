@@ -86,6 +86,9 @@ async function loadBookPage() {
     return;
   }
 
+  // guardar asin para a página models
+  localStorage.setItem("last_asin", asin);
+
   const data = await apiGet(`/books/${encodeURIComponent(asin)}`);
   if (data.error) {
     document.getElementById("main").innerHTML = `<div class="card">${data.error}</div>`;
@@ -104,12 +107,40 @@ async function loadBookPage() {
   const cover = document.getElementById("cover");
   cover.innerHTML = book.imUrl ? `<img src="${book.imUrl}" alt="">` : "";
 
-  // summary no topo das reviews
+  // summary (já vem com live se existir)
   const sb = document.getElementById("summarybox");
-  sb.textContent = data.summary_for_reviews ? data.summary_for_reviews : "(Sem resumo disponível neste ASIN.)";
+  sb.textContent = data.summary_for_reviews ? data.summary_for_reviews : "(Sem resumo disponível.)";
 
   renderReviews(data.user_reviews || []);
+
+  // refresh automático SEM checkbox
+  if (!pollTimer) {
+    pollTimer = setInterval(loadBookPage, 2500);
+  }
 }
+
+async function submitReview() {
+  const asin = qs("asin");
+  const user = (document.getElementById("user").value || "local-user").trim();
+  const text = (document.getElementById("text").value || "").trim();
+  const ratingStr = (document.getElementById("rating_in").value || "").trim();
+  const rating = ratingStr ? Number(ratingStr) : null;
+
+  if (!text) {
+    alert("Escreve uma review primeiro.");
+    return;
+  }
+
+  const resp = await apiPost("/reviews", { asin, text, rating, user });
+  document.getElementById("text").value = "";
+
+  // refresh imediato (já deve trazer summary live se foi criado)
+  await loadBookPage();
+
+  // opcional: se quiseres ver logo modelos
+  // window.location.href = `models.html?asin=${encodeURIComponent(asin)}`;
+}
+
 
 function renderReviews(reviews) {
   const box = document.getElementById("reviews");
@@ -143,40 +174,28 @@ function escapeHtml(s) {
     .replaceAll("'","&#039;");
 }
 
-async function submitReview() {
-  const asin = qs("asin");
-  const user = (document.getElementById("user").value || "local-user").trim();
-  const text = (document.getElementById("text").value || "").trim();
-  const ratingStr = (document.getElementById("rating_in").value || "").trim();
-  const rating = ratingStr ? Number(ratingStr) : null;
-
-  if (!text) {
-    alert("Escreve uma review primeiro.");
-    return;
-  }
-
-  await apiPost("/reviews", {asin, text, rating, user});
-  document.getElementById("text").value = "";
-
-  // refresh imediato
-  await loadBookPage();
-}
-
-function toggleLive() {
-  const enabled = document.getElementById("live").checked;
-  if (pollTimer) {
-    clearInterval(pollTimer);
-    pollTimer = null;
-  }
-  if (enabled) {
-    pollTimer = setInterval(loadBookPage, 2500);
-  }
-}
 
 /* ---------- MODELS ---------- */
 async function loadModels() {
-  const data = await apiGet("/models");
+  const asin = qs("asin");
+  if (!asin) {
+    document.getElementById("modelsjson").textContent = "Falta ?asin=... na URL";
+    return;
+  }
+  const data = await apiGet(`/models/${encodeURIComponent(asin)}`);
   document.getElementById("modelsjson").textContent = JSON.stringify(data, null, 2);
+}
+async function loadModelsLive() {
+  const asin = qs("asin") || localStorage.getItem("last_asin");
+  const pre = document.getElementById("modelsjson");
+
+  if (!asin) {
+    pre.textContent = "Falta ?asin=... e ainda não abriste nenhum livro.";
+    return;
+  }
+
+  const data = await apiGet(`/models/${encodeURIComponent(asin)}`);
+  pre.textContent = JSON.stringify(data, null, 2);
 }
 
 /* ---------- init ---------- */
@@ -185,6 +204,6 @@ window.LABGDD = {
   doSearch,
   loadBookPage,
   submitReview,
-  toggleLive,
   loadModels,
+  loadModelsLive,
 };

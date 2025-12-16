@@ -1,4 +1,4 @@
-#!C:\Users\babis\OneDrive\Desktop\LABGDD\.venv\Scripts\python.exe
+#!C:\LABGDD\.venv\Scripts\python.exe
 
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more

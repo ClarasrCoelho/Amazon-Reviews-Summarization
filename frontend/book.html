@@ -21,7 +21,7 @@
       <button onclick="LABGDD.doSearch()">🔍</button>
     </div>
 
-    <a class="navlink" href="models.html">Modelos & Resultados</a>
+    <a class="navlink" id="modelsLink" href="models.html">Modelos & Resultados</a>
   </div>
 
   <div class="subnav">
@@ -47,14 +47,11 @@
 
       <h3 class="section-title" style="margin-top:16px">Summary (no topo das reviews)</h3>
       <div class="summarybox" id="summarybox">...</div>
+      <div class="small" style="margin-top:10px">
+        <a class="navlink" style="display:inline-block" href="#" id="modelsLink">Ver resultados do modelo →</a>
+      </div>
 
       <h3 class="section-title" style="margin-top:16px">Reviews (tempo real)</h3>
-      <div class="small" style="margin-bottom:10px">
-        <label style="display:flex;gap:8px;align-items:center">
-          <input id="live" type="checkbox" onchange="LABGDD.toggleLive()" />
-          actualizar automaticamente (polling 2.5s)
-        </label>
-      </div>
 
       <div id="reviews"></div>
     </div>

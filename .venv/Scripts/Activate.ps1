@@ -246,6 +246,13 @@ if (Test-Path -Path Env:PYTHONHOME) {
 Copy-Item -Path Env:PATH -Destination Env:_OLD_VIRTUAL_PATH
 $Env:PATH = "$VenvExecDir$([System.IO.Path]::PathSeparator)$Env:PATH"
 
+# --- Spark / Hadoop fix for LABGDD ---
+$env:SPARK_HOME  = "C:\spark"
+$env:JAVA_HOME   = "C:\Program Files\Eclipse Adoptium\jdk-17.0.17.10-hotspot"
+$env:HADOOP_HOME = "C:\hadoop"
+
+$env:PATH = "${env:SPARK_HOME}\bin;${env:JAVA_HOME}\bin;${env:HADOOP_HOME}\bin;${env:PATH}"
+
 # SIG # Begin signature block
 # MIIvJAYJKoZIhvcNAQcCoIIvFTCCLxECAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
