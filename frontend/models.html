@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Modelos — LABGDD</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body onload="LABGDD.loadModels()">
+  <div class="navbar">
+    <div class="brand">
+      <b>LABGDD</b>
+      <span>Amazon Books Replica</span>
+    </div>
+
+    <div class="search">
+      <select><option>Livros</option></select>
+      <input id="q" placeholder="Pesquisar..." />
+      <button onclick="LABGDD.doSearch()">🔍</button>
+    </div>
+
+    <a class="navlink" href="models.html">Modelos & Resultados</a>
+  </div>
+
+  <div class="subnav">
+    <a href="index.html">Início</a>
+    <a href="models.html">Modelos</a>
+    <span style="opacity:.85">Info dos pipelines</span>
+  </div>
+
+  <div style="max-width:1200px;margin:18px auto;padding:0 12px">
+    <div class="card">
+      <h2 style="margin:0 0 10px 0">Modelos & Resultados</h2>
+      <p class="small">Isto vem do endpoint <b>/models</b>. Aqui podes colocar métricas, prints e links para outputs no S3.</p>
+      <pre id="modelsjson" style="background:#0b1020;color:#dbe7ff;padding:12px;border-radius:10px;overflow:auto"></pre>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

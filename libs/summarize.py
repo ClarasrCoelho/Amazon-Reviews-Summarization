@@ -1,9 +1,13 @@
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+# libs/summarize.py
 import torch
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+
 from libs.nlp_udfs import textrank_top_sentences
+
 
 _sum_tok = None
 _sum_model = None
+
 
 def _load_summarizer():
     global _sum_tok, _sum_model
@@ -13,20 +17,34 @@ def _load_summarizer():
     return _sum_tok, _sum_model
 
 
-def summarize_hybrid(text: str, num_sentences_textrank: int = 5,
-                     max_new_tokens: int = 128) -> str:
+def summarize_hybrid(
+    text: str,
+    num_sentences_textrank: int = 5,
+    max_new_tokens: int = 128
+) -> str:
     if not text:
         return ""
-    # 1) extrativo
-    base = textrank_top_sentences(text, num_sentences=num_sentences_textrank)
-    # 2) abstrativo
+
+    # 1) extrativo (safe)
+    base = textrank_top_sentences(
+        text,
+        top_k=num_sentences_textrank,
+        max_chars=200_000
+    )
+
+    if not base:
+        return ""
+
+    # 2) abstrativo (T5)
     tok, model = _load_summarizer()
+
     enc = tok(
         "summarize: " + base,
         return_tensors="pt",
         truncation=True,
         max_length=512,
     )
+
     with torch.no_grad():
         out = model.generate(
             **enc,
@@ -34,4 +52,5 @@ def summarize_hybrid(text: str, num_sentences_textrank: int = 5,
             num_beams=4,
             early_stopping=True,
         )
+
     return tok.decode(out[0], skip_special_tokens=True)

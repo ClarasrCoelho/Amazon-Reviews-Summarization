@@ -54,7 +54,7 @@ spark = (
         "com.amazonaws.auth.profile.ProfileCredentialsProvider"
     )
     .config("spark.hadoop.fs.s3a.endpoint", "s3.eu-north-1.amazonaws.com")
-     .config("spark.sql.execution.arrow.pyspark.enabled", "true")
+    .config("spark.sql.execution.arrow.pyspark.enabled", "true")
     # 🔴 Aumentar timeouts para não rebentar em 2 minutos
     .config("spark.network.timeout", "600s")             # default ~120s
     .config("spark.executor.heartbeatInterval", "60s")   # manter abaixo do timeout

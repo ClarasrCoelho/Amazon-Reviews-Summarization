@@ -1,4 +1,4 @@
-base_path: "s3a://labgdd-tp2/labgdd"
+base_path: "s3a://labgdd-tp2-2/labgdd"
 
 paths:
   raw: "raw/Books_sample.json"

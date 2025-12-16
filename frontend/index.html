@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LABGDD – Livraria (Replica)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body onload="LABGDD.loadBooks()">
+  <div class="navbar">
+    <div class="brand">
+      <b>LABGDD</b>
+      <span>Amazon Books Replica</span>
+    </div>
+
+    <div class="search">
+      <select>
+        <option>Livros</option>
+      </select>
+      <input id="q" placeholder="Pesquisar por título ou ASIN..." />
+      <button onclick="LABGDD.doSearch()">🔍</button>
+    </div>
+
+    <a class="navlink" href="models.html">Modelos & Resultados</a>
+  </div>
+
+  <div class="subnav">
+    <a href="index.html">Início</a>
+    <a href="models.html">Modelos</a>
+    <span style="opacity:.85">Só dados do teu dataset (S3)</span>
+  </div>
+
+  <div class="container">
+    <div class="card filters">
+      <div style="font-weight:800">Filtros (opcional)</div>
+      <div class="pill">Sentimento médio (future)</div>
+      <div class="pill">Aspetos (future)</div>
+      <div class="pill">Ordenar (future)</div>
+      <p class="small">
+        Essencial: pesquisar → abrir livro → ver summary + reviews → adicionar review (tempo real).
+      </p>
+    </div>
+
+    <div class="card results">
+      <h2 style="margin:0">Resultados</h2>
+      <div class="small">Vem do endpoint <b>/books</b> (catálogo leve no S3).</div>
+      <div id="grid" class="grid"></div>
+    </div>
+
+    <div class="card buybox">
+      <div style="font-weight:800">Demo “Amazon-like”</div>
+      <p class="small">Botões só para parecer Amazon 🙂</p>
+      <button class="add">Adicionar ao carrinho</button>
+      <button class="buy">Comprar já</button>
+      <hr style="border:none;border-top:1px solid #eee;margin:14px 0" />
+      <p class="small">API: http://127.0.0.1:8000</p>
+    </div>
+  </div>
+
+  <div class="footer-note">LABGDD — Frontend estático + API FastAPI</div>
+  <script toparity--></script>
+  <script src="app.js"></script>
+</body>
+</html>

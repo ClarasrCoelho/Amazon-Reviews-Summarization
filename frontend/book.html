@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Livro — LABGDD</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body onload="LABGDD.loadBookPage()">
+  <div class="navbar">
+    <div class="brand">
+      <b>LABGDD</b>
+      <span>Amazon Books Replica</span>
+    </div>
+
+    <div class="search">
+      <select>
+        <option>Livros</option>
+      </select>
+      <input id="q" placeholder="Pesquisar..." />
+      <button onclick="LABGDD.doSearch()">🔍</button>
+    </div>
+
+    <a class="navlink" href="models.html">Modelos & Resultados</a>
+  </div>
+
+  <div class="subnav">
+    <a href="index.html">Início</a>
+    <a href="models.html">Modelos</a>
+    <span style="opacity:.85">Página de livro (ASIN)</span>
+  </div>
+
+  <div class="bookpage" id="main">
+    <div class="card">
+      <div class="hero">
+        <div class="cover" id="cover"></div>
+        <div>
+          <h1 id="title">...</h1>
+          <div class="small">
+            <span class="badge">ASIN: <span id="asin"></span></span>
+            <span class="badge">⭐ <span id="rating"></span></span>
+            <span class="badge"><span id="count"></span> reviews</span>
+            <span class="badge">sentimento: <span id="sent"></span></span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="margin-top:16px">Summary (no topo das reviews)</h3>
+      <div class="summarybox" id="summarybox">...</div>
+
+      <h3 class="section-title" style="margin-top:16px">Reviews (tempo real)</h3>
+      <div class="small" style="margin-bottom:10px">
+        <label style="display:flex;gap:8px;align-items:center">
+          <input id="live" type="checkbox" onchange="LABGDD.toggleLive()" />
+          actualizar automaticamente (polling 2.5s)
+        </label>
+      </div>
+
+      <div id="reviews"></div>
+    </div>
+
+    <div class="card">
+      <div style="font-weight:800;margin-bottom:10px">Adicionar review</div>
+      <div class="row">
+        <div>
+          <div class="small" style="margin-bottom:6px">Utilizador</div>
+          <input id="user" type="text" value="local-user" />
+        </div>
+        <div>
+          <div class="small" style="margin-bottom:6px">Rating</div>
+          <input id="rating_in" type="text" placeholder="ex: 4.5" />
+        </div>
+      </div>
+
+      <div class="small" style="margin:10px 0 6px">Texto</div>
+      <textarea id="text" placeholder="Escreve aqui a tua review..."></textarea>
+
+      <button class="add" style="margin-top:10px" onclick="LABGDD.submitReview()">Submeter</button>
+
+      <hr style="border:none;border-top:1px solid #eee;margin:14px 0" />
+      <a class="small" href="index.html">← voltar à lista</a>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+# antes de correr qualquer job nesta shell
+$env:SPARK_HOME = python -c "import pyspark, os; print(os.path.dirname(pyspark.__file__))"
+$env:JAVA_HOME  = "C:\Program Files\Eclipse Adoptium\jdk-17.0.17.10-hotspot"
+$env:PATH       = "$env:SPARK_HOME\bin;$env:JAVA_HOME\bin;$env:PATH"

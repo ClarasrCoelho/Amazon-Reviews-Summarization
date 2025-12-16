@@ -25,11 +25,15 @@ spark = (
     .appName("labgdd-ingest-batch")
     .master("local[*]")
     .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.4")
-    .config(
-        "spark.hadoop.fs.s3a.aws.credentials.provider",
-        "com.amazonaws.auth.profile.ProfileCredentialsProvider"
-    )
+    .config("spark.hadoop.fs.s3a.aws.credentials.provider",
+            "com.amazonaws.auth.profile.ProfileCredentialsProvider")
     .config("spark.hadoop.fs.s3a.endpoint", "s3.eu-north-1.amazonaws.com")
+
+    # ✅ IMPORTANTÍSSIMO no Windows
+    .config("spark.local.dir", "C:/hadoop/tmp")              # usa / ou C:/...
+    .config("spark.hadoop.hadoop.tmp.dir", "C:/hadoop/tmp")
+    .config("spark.hadoop.io.native.lib.available", "false") # força a NÃO usar nativo
+
     .getOrCreate()
 )
 
