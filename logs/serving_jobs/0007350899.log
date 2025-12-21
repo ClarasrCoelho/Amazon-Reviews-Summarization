@@ -1,0 +1,115 @@
+
+--- fired 2025-12-21T10:04:49.226617 asin=0007350899 ---
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-8ffd17d3-6029-4ef7-839e-99b2c09963cd;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 383ms :: artifacts dl 16ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-8ffd17d3-6029-4ef7-839e-99b2c09963cd
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/13ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/21 10:05:05 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[Stage 0:>                                                          (0 + 3) / 3][Stage 0:===================>                                       (1 + 2) / 3][Stage 0:=======================================>                   (2 + 1) / 3]                                                                                Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 286, in <module>
+    main()
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 230, in main
+    print("\U0001f535 Append silver incremental:", SILVER_USER_PREFIX)
+  File "C:\Program Files\Python311\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f535' in position 0: character maps to <undefined>
+SUCCESS: The process with PID 30292 (child process of PID 30336) has been terminated.
+SUCCESS: The process with PID 30336 (child process of PID 8700) has been terminated.
+SUCCESS: The process with PID 8700 (child process of PID 21296) has been terminated.
+
+--- fired 2025-12-21T13:18:30.620670 asin=0007350899 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\python.exe
+cmd=C:\LABGDD\.venv\Scripts\python.exe -m jobs.process_new_reviews --asin 0007350899 --min_new_reviews 1 --hours_back 24
+pid=24472
+[process_new_reviews] start asin=0007350899 hours_back=24 min_new_reviews=1
+[paths] silver_batch=s3a://labgdd-tp2-2/labgdd/silver/reviews
+[paths] silver_user=s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[paths] bronze=s3a://labgdd-tp2-2/labgdd/bronze/reviews_events/
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-9611e8d3-25ea-4d7b-b235-2e2a9b777fbd;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 304ms :: artifacts dl 4ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-9611e8d3-25ea-4d7b-b235-2e2a9b777fbd
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/11ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/21 13:18:46 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[Stage 0:>                                                          (0 + 6) / 6][Stage 0:=========>                                                 (1 + 5) / 6][Stage 0:=================================================>         (5 + 1) / 6]                                                                                [silver] Append silver incremental: s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[Stage 3:>                                                          (0 + 6) / 6][Stage 3:=========>                                                 (1 + 5) / 6][Stage 3:=============================>                             (3 + 3) / 6][Stage 3:=======================================>                   (4 + 2) / 6][Stage 3:=================================================>         (5 + 1) / 6]                                                                                [Stage 4:>                                                          (0 + 6) / 6][Stage 4:=================================================>         (5 + 1) / 6]                                                                                [serving] Recalcular: 0007350899
+[Stage 9:>                                                          (0 + 4) / 4][Stage 9:==============>                                            (1 + 3) / 4]                                                                                [Stage 10:>                                                       (0 + 15) / 15][Stage 10:==============>                                         (4 + 11) / 15][Stage 10:============================================>           (12 + 3) / 15][Stage 10:====================================================>   (14 + 1) / 15]                                                                                [Stage 13:=============================>                            (2 + 2) / 4]                                                                                C:\LABGDD\.venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+[serving] OK: 0007350899
+25/12/21 13:20:13 WARN SparkEnv: Exception while deleting Spark temp dir: C:\Users\babis\AppData\Local\Temp\spark-8b858110-4770-46da-be0a-ad8573e3d4cc\userFiles-ffa33413-d18b-4d4e-8801-fbf88aeb573b
+java.io.IOException: Failed to delete: C:\Users\babis\AppData\Local\Temp\spark-8b858110-4770-46da-be0a-ad8573e3d4cc\userFiles-ffa33413-d18b-4d4e-8801-fbf88aeb573b\org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:147)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:130)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:90)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively(SparkFileUtils.scala:121)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively$(SparkFileUtils.scala:120)
+	at org.apache.spark.util.Utils$.deleteRecursively(Utils.scala:1126)
+	at org.apache.spark.SparkEnv.stop(SparkEnv.scala:108)
+	at org.apache.spark.SparkContext.$anonfun$stop$25(SparkContext.scala:2305)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1375)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2305)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2211)
+	at org.apache.spark.api.java.JavaSparkContext.stop(JavaSparkContext.scala:550)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+[process_new_reviews] terminado.
+SUCCESS: The process with PID 17064 (child process of PID 30360) has been terminated.
+SUCCESS: The process with PID 30360 (child process of PID 6784) has been terminated.
+SUCCESS: The process with PID 6784 (child process of PID 19912) has been terminated.

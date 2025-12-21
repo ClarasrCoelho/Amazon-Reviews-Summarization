@@ -1,105 +1,72 @@
-import os
-import sys
+# jobs/build_books_index.py
 import yaml
+import json
+from pyspark.sql import functions as F
 
-from pyspark.sql import SparkSession, functions as F
-
-
-def norm_win_path(p: str) -> str:
-    """Normaliza paths para o formato mais estável no Java/Hadoop em Windows: C:/..."""
-    return os.path.abspath(p).replace("\\", "/")
-
-
-# --- Hadoop / Spark env (Windows) ---
-HADOOP_HOME = norm_win_path(os.getenv("HADOOP_HOME", r"C:\hadoop"))
-
-# força variáveis que o Hadoop/Spark usam em Windows
-os.environ["HADOOP_HOME"] = HADOOP_HOME
-os.environ["hadoop.home.dir"] = HADOOP_HOME
-
-# garante que o Spark usa o python da venv
-os.environ["PYSPARK_PYTHON"] = sys.executable
-os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
-
+from libs.spark_utils import build_spark
 
 def load_config(path: str = "conf/pipeline.yaml"):
     with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
-
 cfg = load_config()
 BASE_PATH = cfg["base_path"].rstrip("/")
-
-silver_path = f"{BASE_PATH}/{cfg['paths']['silver']}"
 gold_root = cfg["paths"].get("gold", "gold")
 
+books_meta_path = f"{BASE_PATH}/{gold_root}/books_meta"
 serving_path = f"{BASE_PATH}/{gold_root}/serving"
-catalog_out = f"{BASE_PATH}/{gold_root}/catalog/books_index"  # pasta com JSONL part files
 
-# --- Spark session ---
-spark = (
-    SparkSession.builder
-    .appName("labgdd-build-books-index")
-    .master("local[*]")
-    # hadoop.home.dir no Java (sem aspas e com C:/...)
-    .config("spark.driver.extraJavaOptions", f"-Dhadoop.home.dir={HADOOP_HOME}")
-    .config("spark.executor.extraJavaOptions", f"-Dhadoop.home.dir={HADOOP_HOME}")
-    # se não estiveres a usar S3 nesta execução, podes comentar as 3 configs abaixo
-    .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.4")
-    .config(
-        "spark.hadoop.fs.s3a.aws.credentials.provider",
-        "com.amazonaws.auth.profile.ProfileCredentialsProvider",
-    )
-    .config("spark.hadoop.fs.s3a.endpoint", "s3.eu-north-1.amazonaws.com")
-    .getOrCreate()
-)
+# destino esperado pela tua app (pelo erro no UI)
+# gold/serving/books/{asin}.json
+books_json_out = f"{BASE_PATH}/{gold_root}/serving/books"
 
-spark.sparkContext.setLogLevel("WARN")
+spark = build_spark("labgdd-build-books-index")
 
-print("🔵 HADOOP_HOME =", HADOOP_HOME)
-print("🔵 A ler Silver:", silver_path)
-df_silver = spark.read.parquet(silver_path)
+print("🔵 A ler Gold/books_meta:", books_meta_path)
+meta = spark.read.parquet(books_meta_path)
 
 print("🔵 A ler Gold/serving:", serving_path)
-df_serv = spark.read.parquet(serving_path)
+serv = spark.read.parquet(serving_path)
 
-# Silver: stats por asin
-asin_col = "asin" if "asin" in df_silver.columns else None
-if asin_col is None:
-    raise RuntimeError("Não encontrei coluna 'asin' no silver.")
+df = meta.join(serv, on="asin", how="left")
 
-overall_col = "overall" if "overall" in df_silver.columns else None
+# garantir colunas mínimas
+for c in ["avg_rating", "n_reviews"]:
+    if c not in df.columns:
+        df = df.withColumn(c, F.lit(None))
+for c in ["summary", "avg_sentiment", "all_aspects", "avg_aspect_polarity"]:
+    if c not in df.columns:
+        df = df.withColumn(c, F.lit(None))
 
-agg_exprs = [F.count(F.lit(1)).alias("review_count")]
-if overall_col:
-    agg_exprs.append(F.avg(F.col(overall_col)).alias("avg_rating"))
-
-df_stats = df_silver.groupBy("asin").agg(*agg_exprs)
-
-# Serving (conforme publish_serving)
-df_index = (
-    df_serv.select(
-        "asin",
-        F.col("summary").alias("book_summary"),
-        F.col("avg_sentiment").alias("avg_sentiment"),
-        F.col("avg_aspect_polarity").alias("avg_aspect_polarity"),
-        F.col("all_aspects").alias("all_aspects"),
-    )
-    .join(df_stats, on="asin", how="left")
-    # placeholders (se não tiveres metadata)
-    .withColumn("title", F.concat(F.lit("Livro "), F.col("asin")))
-    .withColumn("imUrl", F.lit(""))
-    .withColumn("price", F.lit(None).cast("double"))
-    .withColumn("categories", F.array())
+# cria 1 JSON por ASIN
+df_json = df.select(
+    "asin",
+    F.to_json(
+        F.struct(
+            F.col("asin"),
+            F.col("avg_rating"),
+            F.col("n_reviews"),
+            F.col("summary"),
+            F.col("avg_sentiment"),
+            F.col("all_aspects"),
+            F.col("avg_aspect_polarity"),
+        )
+    ).alias("json")
 )
 
-print("🔵 A escrever índice (JSONL) em:", catalog_out)
+# escrever como “files” por ASIN:
+# truque: escrever partição por asin e depois renomear não dá no S3 facilmente,
+# então escrevemos um ficheiro por asin usando repartition + write text com path.
+# (Funciona bem em s3a: cada asin fica numa pasta com part-0000...json)
+print("🔵 A escrever JSON por ASIN em:", books_json_out)
 (
-    df_index
-    .repartition(1)  # só para demo (mais simples de ler no backend)
-    .write.mode("overwrite")
-    .json(catalog_out)
+    df_json
+    .repartition("asin")
+    .write
+    .mode("overwrite")
+    .partitionBy("asin")
+    .text(books_json_out)
 )
 
 spark.stop()
-print("✅ books_index criado.")
+print("✅ serving/books/{asin} criado (em pastas por asin).")

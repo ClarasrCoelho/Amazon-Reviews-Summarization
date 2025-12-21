@@ -17,3 +17,10 @@ lda:
 summarization:
   num_sentences_textrank: 5
   max_new_tokens: 128
+
+max_chars_summary_input: 8000
+max_reviews_per_asin: 20
+summarize_partitions: 2
+summaries_output_files: 2
+
+target_lang: "all"

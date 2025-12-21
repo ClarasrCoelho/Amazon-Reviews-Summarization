@@ -1,0 +1,42 @@
+
+--- fired 2025-12-21T10:10:03.584221 asin=0007141424 ---
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-a81713bc-280f-4a6c-a8d0-4f76ee6f4ebd;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 322ms :: artifacts dl 23ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-a81713bc-280f-4a6c-a8d0-4f76ee6f4ebd
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/18ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/21 10:10:19 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[Stage 0:>                                                          (0 + 3) / 3][Stage 0:=======================================>                   (2 + 1) / 3]                                                                                Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 286, in <module>
+    main()
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 230, in main
+    print("\U0001f535 Append silver incremental:", SILVER_USER_PREFIX)
+  File "C:\Program Files\Python311\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f535' in position 0: character maps to <undefined>
+SUCCESS: The process with PID 1624 (child process of PID 17868) has been terminated.
+SUCCESS: The process with PID 17868 (child process of PID 10416) has been terminated.
+SUCCESS: The process with PID 10416 (child process of PID 8592) has been terminated.

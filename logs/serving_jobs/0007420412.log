@@ -1,0 +1,709 @@
+
+--- fired 2025-12-21T13:33:26.388253 asin=0007420412 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\python.exe
+cmd=C:\LABGDD\.venv\Scripts\python.exe -m jobs.process_new_reviews --asin 0007420412 --min_new_reviews 1 --hours_back 24
+pid=16608
+[process_new_reviews] start asin=0007420412 hours_back=24 min_new_reviews=1
+[paths] silver_batch=s3a://labgdd-tp2-2/labgdd/silver/reviews
+[paths] silver_user=s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[paths] bronze=s3a://labgdd-tp2-2/labgdd/bronze/reviews_events/
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-59cbabbe-41d1-4238-a737-227f1719d586;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 383ms :: artifacts dl 16ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-59cbabbe-41d1-4238-a737-227f1719d586
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/7ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/21 13:33:43 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[Stage 0:>                                                          (0 + 6) / 6][Stage 0:=========>                                                 (1 + 5) / 6][Stage 0:=================================================>         (5 + 1) / 6]                                                                                [silver] Append silver incremental: s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[Stage 3:>                                                          (0 + 6) / 6][Stage 3:=========>                                                 (1 + 5) / 6][Stage 3:=============================>                             (3 + 3) / 6][Stage 3:=======================================>                   (4 + 2) / 6]                                                                                [Stage 4:>                                                          (0 + 6) / 6][Stage 4:=================================================>         (5 + 1) / 6]                                                                                [serving] Recalcular: 0007420412
+[Stage 8:>                                                          (0 + 1) / 1]                                                                                [Stage 9:>                                                          (0 + 4) / 4][Stage 9:==============>                                            (1 + 3) / 4]                                                                                [Stage 10:>                                                       (0 + 15) / 15][Stage 10:===========>                                            (3 + 12) / 15][Stage 10:=========================================>              (11 + 4) / 15][Stage 10:============================================>           (12 + 3) / 15][Stage 10:====================================================>   (14 + 1) / 15]                                                                                [Stage 13:>                                                         (0 + 4) / 4][Stage 13:=============================>                            (2 + 2) / 4]                                                                                C:\LABGDD\.venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+[serving] OK: 0007420412
+25/12/21 13:35:47 WARN SparkEnv: Exception while deleting Spark temp dir: C:\Users\babis\AppData\Local\Temp\spark-b5e139fc-8c61-490f-85fc-efbc4c067e04\userFiles-cac500fc-9384-4f24-bf53-4b95158b441e
+java.io.IOException: Failed to delete: C:\Users\babis\AppData\Local\Temp\spark-b5e139fc-8c61-490f-85fc-efbc4c067e04\userFiles-cac500fc-9384-4f24-bf53-4b95158b441e\org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:147)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:130)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:90)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively(SparkFileUtils.scala:121)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively$(SparkFileUtils.scala:120)
+	at org.apache.spark.util.Utils$.deleteRecursively(Utils.scala:1126)
+	at org.apache.spark.SparkEnv.stop(SparkEnv.scala:108)
+	at org.apache.spark.SparkContext.$anonfun$stop$25(SparkContext.scala:2305)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1375)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2305)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2211)
+	at org.apache.spark.api.java.JavaSparkContext.stop(JavaSparkContext.scala:550)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+[process_new_reviews] terminado.
+SUCCESS: The process with PID 17572 (child process of PID 24796) has been terminated.
+SUCCESS: The process with PID 24796 (child process of PID 9112) has been terminated.
+SUCCESS: The process with PID 9112 (child process of PID 7844) has been terminated.
+
+--- fired 2025-12-21T13:41:30.452782 asin=0007420412 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\python.exe
+cmd=C:\LABGDD\.venv\Scripts\python.exe -m jobs.process_new_reviews --asin 0007420412 --min_new_reviews 1 --hours_back 24
+pid=26076
+[process_new_reviews] start asin=0007420412 hours_back=24 min_new_reviews=1
+[paths] silver_batch=s3a://labgdd-tp2-2/labgdd/silver/reviews
+[paths] silver_user=s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[paths] bronze=s3a://labgdd-tp2-2/labgdd/bronze/reviews_events/
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-c6ef2605-808c-44df-bfbe-3ace43571bf0;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 302ms :: artifacts dl 11ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-c6ef2605-808c-44df-bfbe-3ace43571bf0
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/9ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/21 13:41:47 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[Stage 0:>                                                          (0 + 6) / 6][Stage 0:=========>                                                 (1 + 5) / 6][Stage 0:===================>                                       (2 + 4) / 6][Stage 0:=================================================>         (5 + 1) / 6]                                                                                [silver] Append silver incremental: s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[Stage 3:>                                                          (0 + 6) / 6][Stage 3:=============================>                             (3 + 3) / 6][Stage 3:=======================================>                   (4 + 2) / 6]                                                                                [Stage 4:>                                                          (0 + 6) / 6][Stage 4:=================================================>         (5 + 1) / 6]                                                                                [serving] Recalcular: 0007420412
+[Stage 8:>                                                          (0 + 1) / 1]                                                                                [Stage 9:>                                                          (0 + 4) / 4]                                                                                [Stage 10:>                                                       (0 + 15) / 15][Stage 10:==============>                                         (4 + 11) / 15][Stage 10:=========================================>              (11 + 4) / 15][Stage 10:============================================>           (12 + 3) / 15][Stage 10:================================================>       (13 + 2) / 15]                                                                                [Stage 13:==============>                                           (1 + 3) / 4][Stage 13:===========================================>              (3 + 1) / 4]                                                                                [Stage 14:>                                                         (0 + 7) / 7][Stage 14:=========================================>                (5 + 2) / 7]                                                                                C:\LABGDD\.venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+[serving] OK: 0007420412
+25/12/21 13:43:51 WARN SparkEnv: Exception while deleting Spark temp dir: C:\Users\babis\AppData\Local\Temp\spark-a3b13f9f-16ea-450f-a8c6-9225050199d2\userFiles-e16d57bf-8653-456c-8bb5-8526f908004c
+java.io.IOException: Failed to delete: C:\Users\babis\AppData\Local\Temp\spark-a3b13f9f-16ea-450f-a8c6-9225050199d2\userFiles-e16d57bf-8653-456c-8bb5-8526f908004c\org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:147)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:130)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:90)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively(SparkFileUtils.scala:121)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively$(SparkFileUtils.scala:120)
+	at org.apache.spark.util.Utils$.deleteRecursively(Utils.scala:1126)
+	at org.apache.spark.SparkEnv.stop(SparkEnv.scala:108)
+	at org.apache.spark.SparkContext.$anonfun$stop$25(SparkContext.scala:2305)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1375)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2305)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2211)
+	at org.apache.spark.api.java.JavaSparkContext.stop(JavaSparkContext.scala:550)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+[process_new_reviews] terminado.
+SUCCESS: The process with PID 20324 (child process of PID 25408) has been terminated.
+SUCCESS: The process with PID 25408 (child process of PID 30528) has been terminated.
+SUCCESS: The process with PID 30528 (child process of PID 18256) has been terminated.
+
+--- fired 2025-12-21T13:56:44.552967 asin=0007420412 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\python.exe
+cmd=C:\LABGDD\.venv\Scripts\python.exe -m jobs.process_new_reviews --asin 0007420412 --min_new_reviews 1 --hours_back 24
+pid=28656
+
+--- fired 2025-12-21T14:22:55.069545 asin=0007420412 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\pythonw.exe
+cmd=C:\LABGDD\.venv\Scripts\pythonw.exe -m jobs.process_new_reviews --asin 0007420412 --min_new_reviews 1 --hours_back 24
+pid=4756
+[process_new_reviews] start asin=0007420412 hours_back=24 min_new_reviews=1
+[paths] silver_batch=s3a://labgdd-tp2-2/labgdd/silver/reviews
+[paths] silver_user=s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[paths] bronze=s3a://labgdd-tp2-2/labgdd/bronze/reviews_events/
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-c1c832ec-adba-43e4-9c16-6f8839e5929d;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 200ms :: artifacts dl 0ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-c1c832ec-adba-43e4-9c16-6f8839e5929d
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/0ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+ERROR:root:Exception while sending command.
+Traceback (most recent call last):
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 335, in <module>
+    main()
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 207, in main
+    spark = build_spark("labgdd-process-new-reviews")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 77, in build_spark
+    return builder.getOrCreate()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\sql\session.py", line 497, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\context.py", line 515, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\context.py", line 203, in __init__
+    self._do_init(
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\context.py", line 296, in _do_init
+    self._jsc = jsc or self._initialize_context(self._conf._jconf)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\context.py", line 421, in _initialize_context
+    return self._jvm.JavaSparkContext(jconf)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\java_gateway.py", line 1587, in __call__
+^C    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\protocol.py", line 334, in get_return_value
+    raise Py4JError(
+py4j.protocol.Py4JError: An error occurred while calling None.org.apache.spark.api.java.JavaSparkContext
+
+--- fired 2025-12-21T14:38:16.151050 asin=0007420412 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\pythonw.exe
+cmd=C:\LABGDD\.venv\Scripts\pythonw.exe -m jobs.process_new_reviews --asin 0007420412 --min_new_reviews 1 --hours_back 24
+pid=22164
+[process_new_reviews] start asin=0007420412 hours_back=24 min_new_reviews=1
+[paths] silver_batch=s3a://labgdd-tp2-2/labgdd/silver/reviews
+[paths] silver_user=s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[paths] bronze=s3a://labgdd-tp2-2/labgdd/bronze/reviews_events/
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-a25c4d40-abb3-4a5d-8eaf-e629005c0b9c;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 232ms :: artifacts dl 12ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-a25c4d40-abb3-4a5d-8eaf-e629005c0b9c
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/9ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+ERROR:root:Exception while sending command.
+Traceback (most recent call last):
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 335, in <module>
+    main()
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 207, in main
+    spark = build_spark("labgdd-process-new-reviews")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 77, in build_spark
+    return builder.getOrCreate()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\sql\session.py", line 497, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\context.py", line 515, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\context.py", line 203, in __init__
+    self._do_init(
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\context.py", line 296, in _do_init
+    self._jsc = jsc or self._initialize_context(self._conf._jconf)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\context.py", line 421, in _initialize_context
+    return self._jvm.JavaSparkContext(jconf)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\java_gateway.py", line 1587, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\protocol.py", line 334, in get_return_value
+    raise Py4JError(
+py4j.protocol.Py4JError: An error occurred while calling None.org.apache.spark.api.java.JavaSparkContext
+^C^CTerminate batch job (Y/N)? 
+--- fired 2025-12-21T14:54:21.025002 asin=0007420412 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\pythonw.exe
+cmd=C:\LABGDD\.venv\Scripts\pythonw.exe -m jobs.process_new_reviews --asin 0007420412 --min_new_reviews 1 --hours_back 24
+pid=29308
+[process_new_reviews] start asin=0007420412 hours_back=24 min_new_reviews=1
+[paths] silver_batch=s3a://labgdd-tp2-2/labgdd/silver/reviews
+[paths] silver_user=s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[paths] bronze=s3a://labgdd-tp2-2/labgdd/bronze/reviews_events/
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-3788c93c-67e6-48e5-87a4-b481eafb09a8;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 156ms :: artifacts dl 4ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-3788c93c-67e6-48e5-87a4-b481eafb09a8
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/6ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/21 14:54:31 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[Stage 0:>                                                          (0 + 7) / 7][Stage 0:========>                                                  (1 + 6) / 7][Stage 0:================>                                          (2 + 5) / 7][Stage 0:==================================================>        (6 + 1) / 7]                                                                                [silver] Append silver incremental: s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[Stage 3:>                                                          (0 + 7) / 7][Stage 3:=========================>                                 (3 + 4) / 7][Stage 3:=================================>                         (4 + 3) / 7]                                                                                [Stage 4:>                                                          (0 + 7) / 7][Stage 4:==================================================>        (6 + 1) / 7]                                                                                [serving] Recalcular: 0007420412
+[Stage 8:>                                                          (0 + 1) / 1]                                                                                [Stage 9:==============>                                            (1 + 3) / 4][Stage 9:===========================================================(4 + 0) / 4]                                                                                [Stage 10:>                                                       (0 + 15) / 15][Stage 10:===========>                                            (3 + 12) / 15][Stage 10:=========================================>              (11 + 4) / 15][Stage 10:============================================>           (12 + 3) / 15][Stage 10:================================================>       (13 + 2) / 15][Stage 10:====================================================>   (14 + 1) / 15]                                                                                [Stage 12:>                                                         (0 + 1) / 1]                                                                                [Stage 13:==============>                                           (1 + 3) / 4]                                                                                [Stage 14:==================================>                      (6 + 4) / 10]                                                                                C:\LABGDD\.venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+[serving] OK: 0007420412
+25/12/21 14:56:26 WARN SparkEnv: Exception while deleting Spark temp dir: C:\Users\babis\AppData\Local\Temp\spark-90f9c1e0-a434-448f-89eb-ace6a3e3c4f5\userFiles-4c1dd60d-cf85-4ef9-be9a-2af6cfe4601c
+java.io.IOException: Failed to delete: C:\Users\babis\AppData\Local\Temp\spark-90f9c1e0-a434-448f-89eb-ace6a3e3c4f5\userFiles-4c1dd60d-cf85-4ef9-be9a-2af6cfe4601c\org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:147)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:130)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:90)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively(SparkFileUtils.scala:121)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively$(SparkFileUtils.scala:120)
+	at org.apache.spark.util.Utils$.deleteRecursively(Utils.scala:1126)
+	at org.apache.spark.SparkEnv.stop(SparkEnv.scala:108)
+	at org.apache.spark.SparkContext.$anonfun$stop$25(SparkContext.scala:2305)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1375)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2305)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2211)
+	at org.apache.spark.api.java.JavaSparkContext.stop(JavaSparkContext.scala:550)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+[process_new_reviews] terminado.
+
+--- fired 2025-12-21T15:05:10.955818 asin=0007420412 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\pythonw.exe
+cmd=C:\LABGDD\.venv\Scripts\pythonw.exe -m jobs.process_new_reviews --asin 0007420412 --min_new_reviews 1 --hours_back 24
+pid=24016
+[process_new_reviews] start asin=0007420412 hours_back=24 min_new_reviews=1
+[paths] silver_batch=s3a://labgdd-tp2-2/labgdd/silver/reviews
+[paths] silver_user=s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[paths] bronze=s3a://labgdd-tp2-2/labgdd/bronze/reviews_events/
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-feb8c8c6-0d81-41ae-9c22-9fde392765ea;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 152ms :: artifacts dl 0ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-feb8c8c6-0d81-41ae-9c22-9fde392765ea
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/0ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/21 15:05:20 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[Stage 0:>                                                          (0 + 8) / 8][Stage 0:=======>                                                   (1 + 7) / 8][Stage 0:==============>                                            (2 + 6) / 8][Stage 0:======================>                                    (3 + 5) / 8][Stage 0:===================================================>       (7 + 1) / 8]                                                                                [silver] Append silver incremental: s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[Stage 3:>                                                          (0 + 8) / 8][Stage 3:==============>                                            (2 + 6) / 8][Stage 3:=============================>                             (4 + 4) / 8][Stage 3:====================================>                      (5 + 3) / 8][Stage 3:===================================================>       (7 + 1) / 8]                                                                                [Stage 4:>                                                          (0 + 8) / 8][Stage 4:===================================================>       (7 + 1) / 8]                                                                                [serving] Recalcular: 0007420412
+[Stage 8:>                                                          (0 + 1) / 1]                                                                                [Stage 9:>                                                          (0 + 4) / 4][Stage 9:==============>                                            (1 + 3) / 4]                                                                                [Stage 10:>                                                       (0 + 15) / 15][Stage 10:===========>                                            (3 + 12) / 15][Stage 10:=========================================>              (11 + 4) / 15][Stage 10:============================================>           (12 + 3) / 15][Stage 10:====================================================>   (14 + 1) / 15]                                                                                [Stage 12:>                                                         (0 + 1) / 1]                                                                                [Stage 13:==============>                                           (1 + 3) / 4]                                                                                [Stage 14:>                                                       (0 + 14) / 14][Stage 14:========================>                                (6 + 8) / 14][Stage 14:================================================>       (12 + 2) / 14]                                                                                C:\LABGDD\.venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+[serving] OK: 0007420412
+25/12/21 15:07:15 WARN SparkEnv: Exception while deleting Spark temp dir: C:\Users\babis\AppData\Local\Temp\spark-fe5f9547-0d9b-40c2-b4c6-5bbd7bd986a3\userFiles-2b7e9a70-8e3a-4090-aab4-624541835837
+java.io.IOException: Failed to delete: C:\Users\babis\AppData\Local\Temp\spark-fe5f9547-0d9b-40c2-b4c6-5bbd7bd986a3\userFiles-2b7e9a70-8e3a-4090-aab4-624541835837\org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:147)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:130)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:90)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively(SparkFileUtils.scala:121)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively$(SparkFileUtils.scala:120)
+	at org.apache.spark.util.Utils$.deleteRecursively(Utils.scala:1126)
+	at org.apache.spark.SparkEnv.stop(SparkEnv.scala:108)
+	at org.apache.spark.SparkContext.$anonfun$stop$25(SparkContext.scala:2305)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1375)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2305)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2211)
+	at org.apache.spark.api.java.JavaSparkContext.stop(JavaSparkContext.scala:550)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+[process_new_reviews] terminado.
+
+--- fired 2025-12-21T15:14:08.718267 asin=0007420412 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\pythonw.exe
+cmd=C:\LABGDD\.venv\Scripts\pythonw.exe -m jobs.process_new_reviews --asin 0007420412 --min_new_reviews 1 --hours_back 24
+pid=13880
+[process_new_reviews] start asin=0007420412 hours_back=24 min_new_reviews=1
+[paths] silver_batch=s3a://labgdd-tp2-2/labgdd/silver/reviews
+[paths] silver_user=s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[paths] bronze=s3a://labgdd-tp2-2/labgdd/bronze/reviews_events/
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-2873a280-1667-4e7b-8e50-5ccf05a74aab;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 150ms :: artifacts dl 16ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-2873a280-1667-4e7b-8e50-5ccf05a74aab
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/13ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/21 15:14:18 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[Stage 0:>                                                          (0 + 8) / 8][Stage 0:=======>                                                   (1 + 7) / 8][Stage 0:==============>                                            (2 + 6) / 8][Stage 0:======================>                                    (3 + 5) / 8][Stage 0:=============================>                             (4 + 4) / 8][Stage 0:===================================================>       (7 + 1) / 8][Stage 0:===========================================================(8 + 0) / 8]                                                                                [silver] Append silver incremental: s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[Stage 3:>                                                          (0 + 8) / 8][Stage 3:==============>                                            (2 + 6) / 8][Stage 3:======================>                                    (3 + 5) / 8][Stage 3:=============================>                             (4 + 4) / 8][Stage 3:====================================>                      (5 + 3) / 8]                                                                                [Stage 4:>                                                          (0 + 8) / 8][Stage 4:===================================================>       (7 + 1) / 8]                                                                                [serving] Recalcular: 0007420412
+[Stage 9:==============>                                            (1 + 3) / 4]                                                                                [Stage 10:>                                                       (0 + 15) / 15][Stage 10:======================>                                  (6 + 9) / 15][Stage 10:=========================================>              (11 + 4) / 15][Stage 10:============================================>           (12 + 3) / 15][Stage 10:================================================>       (13 + 2) / 15]                                                                                [Stage 12:>                                                         (0 + 1) / 1]                                                                                [Stage 13:>                                                         (0 + 4) / 4][Stage 13:==============>                                           (1 + 3) / 4]                                                                                [Stage 14:>                                                         (0 + 7) / 7][Stage 14:========>                                                 (1 + 6) / 7][Stage 14:================>                                         (2 + 5) / 7][Stage 14:=================================>                        (4 + 3) / 7][Stage 14:=================================================>        (6 + 1) / 7]                                                                                C:\LABGDD\.venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+[serving] OK: 0007420412
+25/12/21 15:16:21 WARN SparkEnv: Exception while deleting Spark temp dir: C:\Users\babis\AppData\Local\Temp\spark-aea9534a-efc9-4d5f-8b95-c78451b085ea\userFiles-a9ad77f1-1a86-4a2f-967d-1818c354f57d
+java.io.IOException: Failed to delete: C:\Users\babis\AppData\Local\Temp\spark-aea9534a-efc9-4d5f-8b95-c78451b085ea\userFiles-a9ad77f1-1a86-4a2f-967d-1818c354f57d\org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:147)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:130)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:90)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively(SparkFileUtils.scala:121)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively$(SparkFileUtils.scala:120)
+	at org.apache.spark.util.Utils$.delet[Stage 9:==============>                                            (1 + 3) / 4]                                                                                [Stage 10:===========>                                            (3 + 12) / 15][Stage 10:=========================================>              (11 + 4) / 15][Stage 10:============================================>           (12 + 3) / 15][Stage 10:================================================>       (13 + 2) / 15]                                                                                [Stage 12:>                                                         (0 + 1) / 1]                                                                                [Stage 13:>                                                         (0 + 4) / 4][Stage 13:==============>                                           (1 + 3) / 4][Stage 13:===========================================>              (3 + 1) / 4]                                                                                [Stage 14:======>                                                   (1 + 8) / 9][Stage 14:===================>                                      (3 + 6) / 9][Stage 14:=========================>                                (4 + 5) / 9][Stage 14:================================>                         (5 + 4) / 9]                                                                                C:\LABGDD\.venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+[serving] OK: 0007420412
+25/12/21 15:17:21 WARN SparkEnv: Exception while deleting Spark temp dir: C:\Users\babis\AppData\Local\Temp\spark-37645ec1-148f-41cb-8358-b23b5251c5e6\userFiles-001fa20a-89da-46d8-bab3-9414f4807eb8
+java.io.IOException: Failed to delete: C:\Users\babis\AppData\Local\Temp\spark-37645ec1-148f-41cb-8358-b23b5251c5e6\userFiles-001fa20a-89da-46d8-bab3-9414f4807eb8\org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:147)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:130)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:90)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively(SparkFileUtils.scala:121)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively$(SparkFileUtils.scala:120)
+	at org.apache.spark.util.Utils$.deleteRecursively(Utils.scala:1126)
+	at org.apache.spark.SparkEnv.stop(SparkEnv.scala:108)
+	at org.apache.spark.SparkContext.$anonfun$stop$25(SparkContext.scala:2305)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1375)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2305)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2211)
+	at org.apache.spark.api.java.JavaSparkContext.stop(JavaSparkContext.scala:550)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+[process_new_reviews] terminado.
+
+--- BG RUN 2025-12-21T15:24:30.801295 asin=0007420412 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\pythonw.exe
+cmd=C:\LABGDD\.venv\Scripts\pythonw.exe -m jobs.process_new_reviews --asin 0007420412 --min_new_reviews 1 --hours_back 24
+[process_new_reviews] start asin=0007420412 hours_back=24 min_new_reviews=1
+[paths] silver_batch=s3a://labgdd-tp2-2/labgdd/silver/reviews
+[paths] silver_user=s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[paths] bronze=s3a://labgdd-tp2-2/labgdd/bronze/reviews_events/
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-d446ff10-5675-46ec-a9f3-a4973461675f;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 156ms :: artifacts dl 5ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-d446ff10-5675-46ec-a9f3-a4973461675f
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/14ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+ERROR:root:Exception while sending command.
+Traceback (most recent call last):
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\clientserver.py", line 511, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\socket.py", line 706, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\clientserver.py", line 539, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 335, in <module>
+    main()
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 207, in main
+    spark = build_spark("labgdd-process-new-reviews")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 77, in build_spark
+    return builder.getOrCreate()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\sql\session.py", line 497, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\context.py", line 515, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\context.py", line 203, in __init__
+    self._do_init(
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\context.py", line 296, in _do_init
+    self._jsc = jsc or self._initialize_context(self._conf._jconf)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\pyspark\context.py", line 421, in _initialize_context
+    return self._jvm.JavaSparkContext(jconf)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\java_gateway.py", line 1587, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\LABGDD\.venv\Lib\site-packages\py4j\protocol.py", line 334, in get_return_value
+    raise Py4JError(
+py4j.protocol.Py4JError: An error occurred while calling None.org.apache.spark.api.java.JavaSparkContext
+^C^C
+--- BG RUN 2025-12-21T15:47:49.820609 asin=0007420412 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\python.exe
+cmd=C:\LABGDD\.venv\Scripts\python.exe -m jobs.process_new_reviews --asin 0007420412 --min_new_reviews 1 --hours_back 24
+pid=10680
+[process_new_reviews] start asin=0007420412 hours_back=24 min_new_reviews=1
+[paths] silver_batch=s3a://labgdd-tp2-2/labgdd/silver/reviews
+[paths] silver_user=s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[paths] bronze=s3a://labgdd-tp2-2/labgdd/bronze/reviews_events/
+^C
+--- BG RUN 2025-12-21T16:07:46.806302 asin=0007420412 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\python.exe
+cmd=C:\LABGDD\.venv\Scripts\python.exe -m jobs.process_new_reviews --asin 0007420412 --min_new_reviews 1 --hours_back 24
+pid=8640
+[process_new_reviews] start asin=0007420412 hours_back=24 min_new_reviews=1
+[paths] silver_batch=s3a://labgdd-tp2-2/labgdd/silver/reviews
+[paths] silver_user=s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[paths] bronze=s3a://labgdd-tp2-2/labgdd/bronze/reviews_events/
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-3079a780-2944-4b43-830f-e18fb824260d;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 234ms :: artifacts dl 0ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-3079a780-2944-4b43-830f-e18fb824260d
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/0ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/21 16:07:56 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[Stage 0:>                                                          (0 + 9) / 9][Stage 0:======>                                                    (1 + 8) / 9][Stage 0:=============>                                             (2 + 7) / 9][Stage 0:===================>                                       (3 + 6) / 9][Stage 0:==========================>                                (4 + 5) / 9][Stage 0:================================>                          (5 + 4) / 9][Stage 0:====================================================>      (8 + 1) / 9]                                                                                [silver] Append silver incremental: s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[Stage 3:>                                                          (0 + 9) / 9][Stage 3:===================>                                       (3 + 6) / 9][Stage 3:==========================>                                (4 + 5) / 9][Stage 3:================================>                          (5 + 4) / 9]                                                                                [Stage 4:>                                                          (0 + 9) / 9][Stage 4:====================================================>      (8 + 1) / 9]                                                                                [serving] Recalcular: 0007420412
+[Stage 8:>                                                          (0 + 1) / 1]                                                                                [Stage 9:>                                                          (0 + 4) / 4][Stage 9:============================================>              (3 + 1) / 4]                                                                                [Stage 10:>                                                       (0 + 15) / 15][Stage 10:==================>                                     (5 + 10) / 15][Stage 10:=========================================>              (11 + 4) / 15][Stage 10:============================================>           (12 + 3) / 15][Stage 10:================================================>       (13 + 2) / 15][Stage 10:====================================================>   (14 + 1) / 15]                                                                                [Stage 12:>                                                         (0 + 1) / 1]                                                                                [Stage 13:>                                                         (0 + 4) / 4][Stage 13:==============>                                           (1 + 3) / 4]                                                                                [Stage 14:>                                                       (0 + 11) / 11][Stage 14:=====>                                                  (1 + 10) / 11][Stage 14:==========>                                              (2 + 9) / 11][Stage 14:===============>                                         (3 + 8) / 11][Stage 14:==============================================>          (9 + 2) / 11]                                                                                C:\LABGDD\.venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+[serving] OK: 0007420412
+25/12/21 16:10:03 WARN SparkEnv: Exception while deleting Spark temp dir: C:\Users\babis\AppData\Local\Temp\spark-4381b875-2623-4f70-a163-1cf63311fb89\userFiles-306a4939-3ce3-4bb7-90a4-e830c134ac14
+java.io.IOException: Failed to delete: C:\Users\babis\AppData\Local\Temp\spark-4381b875-2623-4f70-a163-1cf63311fb89\userFiles-306a4939-3ce3-4bb7-90a4-e830c134ac14\org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:147)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:130)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:90)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively(SparkFileUtils.scala:121)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively$(SparkFileUtils.scala:120)
+	at org.apache.spark.util.Utils$.deleteRecursively(Utils.scala:1126)
+	at org.apache.spark.SparkEnv.stop(SparkEnv.scala:108)
+	at org.apache.spark.SparkContext.$anonfun$stop$25(SparkContext.scala:2305)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1375)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2305)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2211)
+	at org.apache.spark.api.java.JavaSparkContext.stop(JavaSparkContext.scala:550)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+[process_new_reviews] terminado.
+SUCCESS: The process with PID 22628 (child process of PID 17228) has been terminated.
+SUCCESS: The process with PID 26500 (child process of PID 15624) has been terminated.
+SUCCESS: The process with PID 17228 (child process of PID 15624) has been terminated.
+SUCCESS: The process with PID 15624 (child process of PID 25628) has been terminated.

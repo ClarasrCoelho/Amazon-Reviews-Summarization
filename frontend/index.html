@@ -4,9 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>LABGDD – Livraria (Replica)</title>
+
+  <!-- DEV: desliga cache -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body onload="LABGDD.loadBooks()">
+
+<body>
   <div class="navbar">
     <div class="brand">
       <b>LABGDD</b>
@@ -27,17 +34,14 @@
   <div class="subnav">
     <a href="index.html">Início</a>
     <a href="models.html">Modelos</a>
-    <span style="opacity:.85">Só dados do teu dataset (S3)</span>
+    <span style="opacity:.85">S3</span>
   </div>
 
   <div class="container">
     <div class="card filters">
-      <div style="font-weight:800">Filtros (opcional)</div>
-      <div class="pill">Sentimento médio (future)</div>
-      <div class="pill">Aspetos (future)</div>
-      <div class="pill">Ordenar (future)</div>
+      <div style="font-weight:800">Workflow</div>
       <p class="small">
-        Essencial: pesquisar → abrir livro → ver summary + reviews → adicionar review (tempo real).
+        abrir livro → ver summary + reviews → adicionar review (tempo real) → consultar métricas na aba Modelos
       </p>
     </div>
 
@@ -58,7 +62,8 @@
   </div>
 
   <div class="footer-note">LABGDD — Frontend estático + API FastAPI</div>
-  <script toparity--></script>
-  <script src="app.js"></script>
+
+  <!-- defer garante que LABGDD existe antes de correres init -->
+  <script src="app.js" defer></script>
 </body>
 </html>

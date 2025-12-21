@@ -1,0 +1,41 @@
+
+--- BG RUN 2025-12-21T16:49:11.028275 asin=0007155662 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\python.exe
+cmd=C:\LABGDD\.venv\Scripts\python.exe -m jobs.process_new_reviews --asin 0007155662 --min_new_reviews 1 --hours_back 24
+pid=24332
+[process_new_reviews] start asin=0007155662 hours_back=24 min_new_reviews=1
+[paths] silver_batch=s3a://labgdd-tp2-2/labgdd/silver/reviews
+[paths] silver_user=s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+[paths] bronze=s3a://labgdd-tp2-2/labgdd/bronze/reviews_events/
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-d3fde017-0da1-4192-b873-1dd552391ae5;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 228ms :: artifacts dl 16ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-d3fde017-0da1-4192-b873-1dd552391ae5
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/14ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+
+--- BG RUN 2025-12-21T16:49:47.240650 asin=0007155662 ---
+cwd=C:\LABGDD
+py=C:\LABGDD\.venv\Scripts\python.exe
+cmd=C:\LABGDD\.venv\Scripts\python.exe -m jobs.process_new_reviews --asin 0007155662 --min_new_reviews 1 --hours_back 24
+pid=636

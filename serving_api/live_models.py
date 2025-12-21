@@ -1,39 +1,15 @@
-# serving_api/live_models.py
-from __future__ import annotations
-
 import json
-import os
 import time
 from typing import Dict, Any, List
 
-from serving_api.s3_utils import read_text_from_s3, write_text_to_s3
-from libs.nlp_udfs import predict_sentiment_batch, extract_aspects_batch
-from libs.summarize import summarize_hybrid
+from libs.summarize import run_summary_models
+from serving_api.s3_utils import read_text_from_s3, append_jsonl, write_text_to_s3
 
-S3_BUCKET = os.getenv("S3_BUCKET", "labgdd-tp2-2")
-S3_PREFIX = os.getenv("S3_PREFIX", "labgdd")
-
-USER_REVIEWS_PREFIX = f"{S3_PREFIX}/gold/user_reviews/"
-LIVE_BOOKS_PREFIX = f"{S3_PREFIX}/gold/live/books/"
-
-
-def _user_reviews_key(asin: str) -> str:
-    return f"{USER_REVIEWS_PREFIX}{asin}.jsonl"
-
-
-def _live_book_key(asin: str) -> str:
-    return f"{LIVE_BOOKS_PREFIX}{asin}.json"
-
-
-def load_user_reviews(asin: str) -> List[dict]:
-    """
-    Lê as reviews 'live' do S3 (jsonl) para um ASIN.
-    """
+def _read_jsonl_list(bucket: str, key: str) -> List[dict]:
     try:
-        txt = read_text_from_s3(S3_BUCKET, _user_reviews_key(asin))
+        txt = read_text_from_s3(bucket, key)
     except Exception:
         return []
-
     out = []
     for line in txt.splitlines():
         line = line.strip()
@@ -45,59 +21,52 @@ def load_user_reviews(asin: str) -> List[dict]:
             pass
     return out
 
-
-def _concat_texts(reviews: List[dict], max_chars: int = 200_000) -> str:
-    parts = []
-    for r in reviews:
-        t = (r.get("text") or "").strip()
-        if t:
-            parts.append(t)
-    s = " ".join(parts)
-    return s[:max_chars]
-
-
-def run_live_models(asin: str) -> Dict[str, Any]:
+def recompute_live_for_asin(
+    bucket: str,
+    prefix: str,
+    asin: str,
+    base_summary: str,
+) -> Dict[str, Any]:
     """
-    Corre 'modelos' em tempo real com base nas user_reviews:
-    - sentimento médio (usando o teu predict_sentiment_batch)
-    - aspetos agregados (extract_aspects_batch)
-    - resumo (summarize_hybrid)
-    Guarda resultado em: gold/live/books/{asin}.json
+    Lê user_reviews do S3 -> corre 2 sumarizadores -> escolhe best -> grava resultados live no S3.
     """
-    reviews = load_user_reviews(asin)
-    text_all = _concat_texts(reviews)
+    user_reviews_key = f"{prefix}/gold/user_reviews/{asin}.jsonl"
+    user_reviews = _read_jsonl_list(bucket, user_reviews_key)
 
-    # Sentiment: usa o batch util (pd.Series), mas aqui chamamos de forma simples
-    # Fazemos um "batch" de 1 (texto concatenado)
-    import pandas as pd
-    sent = float(predict_sentiment_batch(pd.Series([text_all]))[0]) if text_all else 0.0
+    # texto live = juntar user reviews (só o campo text)
+    live_text = " ".join([(r.get("text") or "") for r in user_reviews]).strip()
 
-    # Aspects: também batch de 1
-    aspects = extract_aspects_batch(pd.Series([text_all]))[0] if text_all else []
-    if aspects is None:
-        aspects = []
-    if not isinstance(aspects, list):
-        try:
-            aspects = list(aspects)
-        except Exception:
-            aspects = []
+    # modelos (comparação)
+    models = run_summary_models(live_text if live_text else "")
+    best = models["best"]
 
-    # Summary (híbrido)
-    summary = summarize_hybrid(text_all, num_sentences_textrank=5, max_new_tokens=128) if text_all else ""
-
-    result = {
+    # summary apresentado no livro:
+    # - mantemos o base_summary (do dataset) e mostramos também o live_best
+    # - se ainda não houver user reviews, live_best fica vazio
+    live_payload = {
         "asin": asin,
-        "n_user_reviews": len(reviews),
-        "summary_live": summary,
-        "avg_sentiment_live": sent,
-        "aspects_live": aspects[:20],
         "ts": time.time(),
+        "base_summary": base_summary or "",
+        "live_reviews_count": len(user_reviews),
+        "candidates": {
+            "textrank_baseline": {
+                "summary": models["textrank_baseline"].summary,
+                "score": models["textrank_baseline"].score,
+                "reasons": models["textrank_baseline"].reasons,
+            },
+            "abstractive_mapreduce": {
+                "summary": models["abstractive_mapreduce"].summary,
+                "score": models["abstractive_mapreduce"].score,
+                "reasons": models["abstractive_mapreduce"].reasons,
+            },
+        },
+        "best_model": best.name,
+        "best_summary": best.summary,
+        "best_score": best.score,
     }
 
-    write_text_to_s3(
-        S3_BUCKET,
-        _live_book_key(asin),
-        json.dumps(result, ensure_ascii=False),
-        content_type="application/json",
-    )
-    return result
+    # gravar “live” por asin
+    live_key = f"{prefix}/gold/live/books/{asin}.json"
+    write_text_to_s3(bucket, live_key, json.dumps(live_payload, ensure_ascii=False), content_type="application/json")
+
+    return live_payload

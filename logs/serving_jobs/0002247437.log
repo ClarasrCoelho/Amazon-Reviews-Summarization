@@ -1,0 +1,65 @@
+
+--- fired 2025-12-21T11:04:51.860191 asin=0002247437 ---
+:: loading settings :: url = jar:file:/C:/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: C:\Users\babis\.ivy2\cache
+The jars for the packages stored in: C:\Users\babis\.ivy2\jars
+org.apache.hadoop#hadoop-aws added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-8615b535-916d-492a-bd00-9f51461d4569;1.0
+	confs: [default]
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 387ms :: artifacts dl 0ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-8615b535-916d-492a-bd00-9f51461d4569
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/16ms)
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/12/21 11:05:08 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[Stage 0:>                                                          (0 + 4) / 4][Stage 0:==============>                                            (1 + 3) / 4][Stage 0:============================================>              (3 + 1) / 4][Stage 2:>                                                          (0 + 1) / 1]                                                                                [Stage 3:>                                                          (0 + 4) / 4][Stage 3:==============>                                            (1 + 3) / 4][Stage 3:=============================>                             (2 + 2) / 4][Stage 3:============================================>              (3 + 1) / 4]                                                                                [Stage 4:>                                                          (0 + 4) / 4][Stage 4:============================================>              (3 + 1) / 4]                                                                                [Stage 8:>                                                          (0 + 1) / 1]                                                                                [Stage 9:>                                                          (0 + 4) / 4][Stage 9:==============>                                            (1 + 3) / 4]                                                                                [Stage 10:>                                                       (0 + 15) / 15][Stage 10:===========>                                            (3 + 12) / 15][Stage 10:==========================>                              (7 + 8) / 15][Stage 10:====================================================>   (14 + 1) / 15]                                                                                [Stage 12:>                                                         (0 + 1) / 1]                                                                                [Stage 14:>                                                         (0 + 1) / 1]                                                                                C:\LABGDD\.venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+25/12/21 11:07:01 WARN SparkEnv: Exception while deleting Spark temp dir: C:\Users\babis\AppData\Local\Temp\spark-6abead35-98fa-4b8e-aa25-7726125999c4\userFiles-48330eba-582d-4227-bb40-153de3c22c21
+java.io.IOException: Failed to delete: C:\Users\babis\AppData\Local\Temp\spark-6abead35-98fa-4b8e-aa25-7726125999c4\userFiles-48330eba-582d-4227-bb40-153de3c22c21\org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:147)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursivelyUsingJavaIO(JavaUtils.java:130)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:117)
+	at org.apache.spark.network.util.JavaUtils.deleteRecursively(JavaUtils.java:90)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively(SparkFileUtils.scala:121)
+	at org.apache.spark.util.SparkFileUtils.deleteRecursively$(SparkFileUtils.scala:120)
+	at org.apache.spark.util.Utils$.deleteRecursively(Utils.scala:1126)
+	at org.apache.spark.SparkEnv.stop(SparkEnv.scala:108)
+	at org.apache.spark.SparkContext.$anonfun$stop$25(SparkContext.scala:2305)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1375)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2305)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2211)
+	at org.apache.spark.api.java.JavaSparkContext.stop(JavaSparkContext.scala:550)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Append silver incremental: s3a://labgdd-tp2-2/labgdd/silver/user_reviews
+Recalcular serving: 0002247437
+serving ok: 0002247437
+process_new_reviews terminado.
+SUCCESS: The process with PID 6196 (child process of PID 18964) has been terminated.
+SUCCESS: The process with PID 18964 (child process of PID 16548) has been terminated.
+SUCCESS: The process with PID 16548 (child process of PID 23728) has been terminated.

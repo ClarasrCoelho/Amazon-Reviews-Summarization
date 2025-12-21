@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\LABGDD\jobs\process_new_reviews.py", line 19, in <module>
+    from libs.summarize import run_summary_models
+ImportError: cannot import name 'run_summary_models' from 'libs.summarize' (C:\LABGDD\libs\summarize.py)
